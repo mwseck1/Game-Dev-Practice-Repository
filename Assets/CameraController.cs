@@ -21,19 +21,19 @@ public class CameraController : MonoBehaviour
 
         if(mouseX >= Screen.width)
         {
-            transform.Translate(Vector3.right);
+            transform.Translate(new Vector3(0.3f,0,0));
         }
         else if(mouseX <= 0)
         {
-            transform.Translate(Vector3.left);
+            transform.Translate(new Vector3(-0.3f,0,0));
         }
         if(mouseY >= Screen.height)
         {
-            transform.Translate(Vector3.up);
+            transform.Translate(new Vector3(0,0.3f,0));
         }
         else if(mouseY <= 0)
         {
-            transform.Translate(Vector3.down);
+            transform.Translate(new Vector3(0,-0.3f,0));
         }
 
     }

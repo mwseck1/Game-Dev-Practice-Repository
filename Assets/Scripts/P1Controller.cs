@@ -10,7 +10,7 @@ public class P1Controller : Sprite
 
     public void Move()
     {
-      if(GetComponent<Transform>().position != newPosition && isSelected)
+      if(GetComponent<Transform>().position != newPosition)
       {
           GetComponent<Transform>().position = Vector2.MoveTowards(transform.position, newPosition, 0.1f);
       }

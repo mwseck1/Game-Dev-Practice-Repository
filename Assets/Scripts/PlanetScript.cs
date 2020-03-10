@@ -7,7 +7,7 @@ public class PlanetScript : Sprite
 {
    public Rect popUpWindow;
    public Vector3 coordinates;
-   private bool selectedShip;
+   private bool isShipSelected;
    public GameObject shipToMove;
 
     public bool CheckForSelectedShip()
@@ -26,7 +26,7 @@ public class PlanetScript : Sprite
         return false;
     }
     
-    public bool WndowWasClicked()
+    public bool WindowWasClicked()
     {
         float mouseX = Input.mousePosition.x;
         float mouseY = (Screen.height - Input.mousePosition.y);
@@ -46,10 +46,11 @@ public class PlanetScript : Sprite
 
    public void CreateWindow(int WindowID)
    {
-       if(GUI.Button(new Rect(100,100, 50, 50), "Test"))
+       if(GUI.Button(new Rect(125,200, 50, 50), "Test"))
        {
            var newShip = GameObject.Find("p1");
-           Instantiate(newShip);
+           
+           Instantiate(newShip, new Vector3(transform.position.x + 1, transform.position.y + 1, 0), Quaternion.identity);
        }
    }
 
@@ -61,9 +62,10 @@ public class PlanetScript : Sprite
 
    public void OnMouseOver()
     {
-        if(Input.GetMouseButtonDown(1) && !isSelected && selectedShip)
+        if(Input.GetMouseButtonDown(1) && !isSelected && isShipSelected)
         {
-            shipToMove.GetComponent<P1Controller>().newPosition = transform.position;
+            shipToMove.GetComponent<P1Controller>().newPosition = 
+                new Vector3(transform.position.x + 1, transform.position.y + 1, 0);
         }
     }
 
@@ -75,22 +77,22 @@ public class PlanetScript : Sprite
         coordinates = RectTransformUtility.WorldToScreenPoint(Camera.main, coordinates);
         float correctYPosition = (Screen.height - coordinates.y) - 100; 
         popUpWindow = new Rect(coordinates.x - 350, correctYPosition,300, 300);
-        selectedShip = false;
+        isShipSelected = false;
         shipToMove = null;
     }
 
     // Update is called once per frame
     public override void Update()
     {
-      selectedShip = CheckForSelectedShip();
-
+      isShipSelected = CheckForSelectedShip();
+      
       if(wasClicked && Input.GetMouseButtonDown(0))
       {
          transform.GetChild(0).GetComponent<Renderer>().enabled = true;
          isSelected = true;
          wasClicked = false;
       }
-      else if(!wasClicked && Input.GetMouseButtonDown(0) && !WndowWasClicked())
+      else if(!wasClicked && Input.GetMouseButtonDown(0) && !WindowWasClicked())
       {
           transform.GetChild(0).GetComponent<Renderer>().enabled = false;
           isSelected = false;
