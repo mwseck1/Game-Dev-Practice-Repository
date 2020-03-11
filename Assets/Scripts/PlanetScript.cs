@@ -8,20 +8,31 @@ public class PlanetScript : Sprite
    public Rect popUpWindow;
    public Vector3 coordinates;
    private bool isShipSelected;
+   public GameObject currentPlayer;
    public GameObject shipToMove;
 
     public bool CheckForSelectedShip()
     {
-        GameObject[] PlayerShips = GameObject.FindGameObjectsWithTag("PlayerShip");
+        GameObject[] Players = GameObject.FindGameObjectsWithTag("Player");
 
-        foreach (var ship in PlayerShips)
+        foreach (var player in Players)
         {
-            if(ship.GetComponent<P1Controller>().isSelected == true)
+            if(player.GetComponent<CorporationController>().isPlayerTurn == true)
             {
-                shipToMove = ship;
-                return true;
+                currentPlayer = player;
             }
         }
+
+       GameObject[] ships = currentPlayer.GetComponent<CorporationController>().ships;
+
+       foreach(var ship in ships)
+       {
+           if(ship.GetComponent<P1Controller>().isSelected == true)
+           {
+               shipToMove = ship;
+               return true;
+           }
+       }
 
         return false;
     }

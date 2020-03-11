@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class P1Controller : Sprite
 {
     public Vector3 newPosition;
-
+    
     public void Move()
     {
       if(GetComponent<Transform>().position != newPosition)
